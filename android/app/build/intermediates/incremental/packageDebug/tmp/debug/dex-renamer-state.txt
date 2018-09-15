@@ -1,0 +1,4 @@
+#Sat Sep 15 14:46:12 IST 2018
+base.0=D\:\\note-fence\\reactriot2018-note-fence\\android\\app\\build\\intermediates\\transforms\\dexMerger\\debug\\0
+path.0=classes.dex
+renamed.0=classes.dex

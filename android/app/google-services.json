@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "902393125561",
+    "firebase_url": "https://note-fence.firebaseio.com",
+    "project_id": "note-fence",
+    "storage_bucket": "note-fence.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902393125561:android:8c77209b63433223",
+        "android_client_info": {
+          "package_name": "com.notefence"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902393125561-gng8eutl460nj4ior8p24pspoukhh53o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNFC2gMjACeZ8P5dWZi49QsjyCI8yFi3o"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
