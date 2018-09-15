@@ -6,8 +6,8 @@ class AppContainer extends PureComponent {
     return (
       <Fragment>
         <Header />
-        <main class="main">
-          <div class="card cardTemplate" />
+        <main className="main">
+          <div className="card cardTemplate" />
         </main>
         <ActionButton />
       </Fragment>
