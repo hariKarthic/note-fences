@@ -1,7 +1,7 @@
 import React, { Fragment, PureComponent } from "react";
-import "./App.css";
 import MainContent from "./MainContent";
 import { Header, ActionContainer } from "./components";
+import { CssBaseline } from "@material-ui/core";
 //import worker from "workerize-loader!./web.worker"; //eslint-disable-line
 // import CreateNote from "./components/createNote";
 //let webworker = worker();
@@ -47,6 +47,7 @@ class App extends PureComponent {
     const { notes } = this.state;
     return (
       <Fragment>
+        <CssBaseline />
         <Header />
         <MainContent data={notes} onUpdateNote={this.updateNote} />
         <ActionContainer data={notes} onAddNote={this.addNewNote} />

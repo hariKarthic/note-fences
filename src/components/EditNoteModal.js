@@ -1,5 +1,12 @@
 import React, { PureComponent } from "react";
 import Modal from "react-responsive-modal";
+import Button from "@material-ui/core/Button";
+
+const styles = {
+  cancelBtn: {
+    marginRight: 10
+  }
+};
 
 class EditNoteModal extends PureComponent {
   constructor(props) {
@@ -44,10 +51,29 @@ class EditNoteModal extends PureComponent {
     const { open, note } = this.state;
     return (
       <Modal open={open} onClose={this.closeModal} center showCloseIcon={false}>
-        <textarea onChange={this.handleChange} value={note.text} />
-        <div style={{ textAlign: "right" }}>
-          <button onClick={this.closeModal}>Cancel</button>
-          <button onClick={this.handleSendClick}>Send</button>
+        <textarea
+          onChange={this.handleChange}
+          value={note.text}
+          style={{ minWidth: 300, minHeight: 80 }}
+        />
+        <div style={{ textAlign: "right", marginTop: 20 }}>
+          <Button
+            style={styles.cancelBtn}
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={this.closeModal}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={this.handleSendClick}
+          >
+            Send
+          </Button>
         </div>
       </Modal>
     );
