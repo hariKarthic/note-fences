@@ -1,10 +1,10 @@
 import React, { Component } from "react";
 import logo from "./logo.svg";
 import "./App.css";
-import worker from "workerize-loader!./web.worker"; //eslint-disable-line
+//import worker from "workerize-loader!./web.worker"; //eslint-disable-line
 import CreateNote from "./components/createNote";
-
-let webworker = worker();
+import AppContainer from "./AppContainer";
+//let webworker = worker();
 
 class App extends Component {
   state = {};
@@ -24,26 +24,14 @@ class App extends Component {
   }
 
   watchsuccess(pos) {
-
     const coords = pos.coords;
     //TODO: loop through the set of lat/long and trigger
 
-    navigator.geolocation.clearWatch(this.locationWatchId)
-
-
-
+    navigator.geolocation.clearWatch(this.locationWatchId);
   }
 
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <CreateNote />
-      </div>
-    );
+    return <AppContainer className="App" />;
   }
 }
 
