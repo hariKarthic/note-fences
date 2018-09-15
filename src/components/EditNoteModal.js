@@ -55,8 +55,23 @@ class EditNoteModal extends PureComponent {
           onChange={this.handleChange}
           value={note.text}
           style={{ minWidth: 300, minHeight: 80 }}
+          autoFocus
         />
-        <div style={{ textAlign: "right", marginTop: 20 }}>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "row-reverse",
+            marginTop: 20
+          }}
+        >
+          <Button
+            variant="contained"
+            color="primary"
+            size="small"
+            onClick={this.handleSendClick}
+          >
+            Send
+          </Button>
           <Button
             style={styles.cancelBtn}
             variant="outlined"
@@ -65,14 +80,6 @@ class EditNoteModal extends PureComponent {
             onClick={this.closeModal}
           >
             Cancel
-          </Button>
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={this.handleSendClick}
-          >
-            Send
           </Button>
         </div>
       </Modal>
