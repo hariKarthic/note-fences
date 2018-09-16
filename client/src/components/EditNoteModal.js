@@ -30,6 +30,7 @@ class EditNoteModal extends PureComponent {
   };
   handleSendClick = () => {
     console.log(this.props.data);
+    if (!this.state.note) return;
     if (this.props.isEdit) {
       this.props.onUpdateNote({
         text: this.state.note,
