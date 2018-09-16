@@ -20,6 +20,8 @@ class App extends Component {
   locationWatchId = {};
   otherFences = null;
   locationOpts = {
+    enableHighAccuracy: true,
+    timeout: 3000,
     maximumAge: 0
   };
 
@@ -70,21 +72,25 @@ class App extends Component {
   }
 
   getLocation(data) {
-    const success = position => {
-      const random_guid = uuidv1();
-      this.setLocalGuids([random_guid]);
-      console.log(position);
+    const random_guid = uuidv1();
+    const onLocationSuccess = position => {
+      localStorage.setItem("cachedLocation", JSON.stringify(position.coords)); //updating localstorage with new position
       this.setCurrentNoteFence(position.coords, random_guid);
       this.broadCastPayLoad(position.coords, random_guid, data);
     };
-    const failure = err => {
-      console.error("Failed to get current location");
+    const onLocationFailure = err => {
+      console.error(
+        "Failed to get current location,passing prev known location"
+      );
       console.error(err);
-      console.error("Note not pushed to server!");
+      let cachedPos = localStorage.getItem("cachedLocation");
+      cachedPos = JSON.parse(cachedPos);
+      this.setCurrentNoteFence(cachedPos, random_guid);
+      this.broadCastPayLoad(cachedPos, random_guid, data);
     };
     navigator.geolocation.getCurrentPosition(
-      success,
-      failure,
+      onLocationSuccess,
+      onLocationFailure,
       this.locationOpts
     );
   }
@@ -92,11 +98,12 @@ class App extends Component {
   broadCastPayLoad(coords, fenceId, message) {
     //TODO : Emit a socket event with payload
     socket.emit("PUSH_NOTE", {
-        guid: fenceId,
-        message: message.text,
-        latitude: coords.latitude,
-        longitude: coords.longitude
+      guid: fenceId,
+      message: message.text,
+      latitude: coords.latitude,
+      longitude: coords.longitude
     });
+    this.setLocalGuids([fenceId]);
     console.info("Note pushed to server");
   }
 
@@ -141,25 +148,27 @@ class App extends Component {
   }
 
   watchsuccess(pos) {
+    console.log("Watched location", pos.coords);
     const coords = pos.coords;
-    console.log("Inside WatchSuccess", coords);
-    //TODO: filter the notefence array and return only the non-matchings ones
+    localStorage.setItem("cachedLocation", JSON.stringify(coords.coords));
     const enteredFences =
       this.otherFences &&
       this.otherFences.isInside({
         latitude: coords.latitude,
         longitude: coords.longitude
       });
-    //TODO: loop through the set of lat/long and trigger
     if (enteredFences && enteredFences.length) {
       console.log("Entered into the some other fence and picked up a note");
-      //TODO : Make socket call
       socket.emit("FETCH_NOTE_EV", {
         guids: [enteredFences.map(item => item.guid)]
       });
       this.setState({ hasEntered: true });
-      navigator.geolocation.clearWatch(this.locationWatchId);
+      //navigator.geolocation.clearWatch(this.locationWatchId);
     }
+  }
+
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.locationWatchId);
   }
 
   watcherror(err) {
