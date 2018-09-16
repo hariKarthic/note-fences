@@ -160,7 +160,7 @@ class App extends Component {
     if (enteredFences && enteredFences.length) {
       console.log("Entered into the some other fence and picked up a note");
       socket.emit("FETCH_NOTE_EV", {
-        guids: [enteredFences.map(item => item.guid)]
+        guids: enteredFences.map(item => item.guid)
       });
       this.setState({ hasEntered: true });
       //navigator.geolocation.clearWatch(this.locationWatchId);
