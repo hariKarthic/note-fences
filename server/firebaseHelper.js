@@ -1,8 +1,9 @@
 import Firestore from '@google-cloud/firestore';
+import serviceAccountDetails from './serviceAccount'; 
 
 const firestore = new Firestore({
     projectId: "note-fence",
-    keyFilename: './serviceaccount.json'
+    keyFilename: serviceAccount
 });
 const settings = { timestampsInSnapshots: true };
 
