@@ -1,6 +1,23 @@
 # NoteFence App
 An app to send location aware notes which will be received when device is in that particular geo-fenced location.
 
+## Use cases
+1. As a customer is a store, i can drop quick reviews next to product aisles which will be picked up by incoming customers.
+2. Store owners can place advertisement notes, which will be picked up by prospective customers.
+3. Users can drop reminder notes to colleagues at their desks
+
+## Future
+- Plan to move this app to react-native for better performance and improved features
+- Targetted messages to specific users.
+- Login via google or other OAuth providers
+
+## Limitations
+- As of now this app does not work in background. To receive notes, the app has to be running in foreground.
+- Due to time constraints unit tested only on Chrome on Android and iOS 
+
+## Tech Stack
+   react, react-dom,firebase,fire-store,Sentry,lodash,webpack,create-react-app
+
 ## Getting Started
 Following instruction will help you to get this code and make it up and running in your local environment.
 
@@ -32,17 +49,6 @@ http://localhost:3000
 Deployment can be done on heroku or any other platform which supports node deployment. We deployed on heroku and the guidelines followed was as per the heroku `official documentation`.
 So, in short, we need to create an app on heroku and then we can publish our app to the heroku app.
 Once deployed, we can launch the app through the URL provided by heroku.
-
-## Use cases
-1. As a consumer, I went to a place where I found something that I want other colleagues to notify once they are at that location, we can send the text notes with the information.
-once user comes to that geo fenced location, they will receive the note on their phone.
-
-## Future
-- Plan to move this app to react-native for better performance and improved features
-
-## Limitations
-- As of now this app does not work in background. To receive notes, the app has to be running in foreground.
-
 ## Authors
 - Hari Karthick
 - Anirvann Das
@@ -50,4 +56,4 @@ once user comes to that geo fenced location, they will receive the note on their
 
 ## Credits
 - Smashicons (for app icon)
-    > https://www.flaticon.com/authors/smashicons
+    > https://www.flaticon.com/authors/smashiconss
