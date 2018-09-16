@@ -29,7 +29,6 @@ export default class FirebaseHelper {
         this.notesRef = firestore.collection('notes');
     }
     postNote(guid, latitude, longitude, note) {
-        console.log(guid, latitude, longitude, note);
         return this.notesRef
         .doc()
         .set({ note, latitude, longitude, guid });
@@ -42,7 +41,6 @@ export default class FirebaseHelper {
             data.forEach(datum => {
                 colln.push(datum.data());
             })
-            // console.log('all conns received: ', colln);
             return colln;
         });
     }
@@ -52,13 +50,10 @@ export default class FirebaseHelper {
         .then(data => {
             let colln = [];
             data.forEach(datum => {
-                console.log('guids: ', guids);
-                
                 if(guids.includes(datum.data().guid)){
                     colln.push(datum.data());
                 }
             })
-            console.log('fetched msgs: ', colln);
             return colln;
         });
     }

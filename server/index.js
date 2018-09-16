@@ -27,7 +27,6 @@ io.on("connection", socket => {
   console.log('first conn: ', socket.id);
   let notes = [];
   firebaseHelper.getAllLocations([]).then(notes => {
-    console.log(notes);
     io.to(socket.id).emit("INIT_CONN_EV", {
       notes: notes
     });
@@ -42,7 +41,6 @@ io.on("connection", socket => {
   });
 
   socket.on("PUSH_NOTE", data => {
-    console.log('------------PUSH_NOTE: ', data.guid, data.latitude, data.longitude, data.message);
     firebaseHelper
       .postNote(data.guid, data.latitude, data.longitude, data.message)
       .then(() => {
