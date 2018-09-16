@@ -1,4 +1,6 @@
 import { CssBaseline } from "@material-ui/core";
+import {  MuiThemeProvider } from '@material-ui/core/styles';
+import Typography from "@material-ui/core/Typography";
 import React, { Component, Fragment } from "react";
 import io from "socket.io-client";
 import { ActionContainer, Header } from "./components";
@@ -6,14 +8,17 @@ import MainContent from "./MainContent";
 //import worker from "workerize-loader!./web.worker"; //eslint-disable-line
 //let webworker = worker();
 import { FENCE } from "./utils/Fencery";
+import theme from './utils/themes';
 import "./utils/storageUtils";
 import Loader from "./components/loader";
+const uuidv1 = require("uuid/v1");
+
 
 const socket = io();
 socket.on("connect", () => {
   console.info("Socked has connected", socket.connected);
 });
-const uuidv1 = require("uuid/v1");
+
 
 class App extends Component {
   state = {};
@@ -80,9 +85,9 @@ class App extends Component {
       })
       .map(item => {
         return {
-            center:{ 
+            center:{
             latitude: item.latitude,
-            longitude: item.longitude  
+            longitude: item.longitude
           },
           name: item.guid,
           radius: 5
@@ -187,7 +192,7 @@ class App extends Component {
     console.log("Watched location", pos.coords);
     const coords = pos.coords;
     localStorage.setItem("cachedLocation", JSON.stringify({
-      'latitude': coords.latitude, 
+      'latitude': coords.latitude,
       'longitude': coords.longitude
     }));
     const enteredFences =
@@ -219,13 +224,13 @@ class App extends Component {
   render() {
     const { notes } = this.state;
     return (
-      <Fragment>
+      <MuiThemeProvider theme ={theme}>
         <CssBaseline />
         <Header />
         <MainContent data={notes} onUpdateNote={this.updateNote} />
           {!this.state.hasEntered && <Loader/>}
         <ActionContainer data={notes} onAddNote={this.addNewNote} />
-      </Fragment>
+      </MuiThemeProvider>
     );
   }
 }

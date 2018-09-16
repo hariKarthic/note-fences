@@ -9,18 +9,10 @@ class NoteCard extends PureComponent {
     return (
       <Card className={this.props.cardClass}>
         <CardContent>
-          <Typography color="textSecondary">
+          <Typography variant="subheading"  color="textPrimary">
             {this.props.data && this.props.data.note}
           </Typography>
         </CardContent>
-        {/*<CardActions>
-          <IconButton
-            onClick={this.props.onClick}
-            style={{ marginLeft: "auto" }}
-          >
-            <EditIcon />
-          </IconButton>
-        </CardActions>*/}
       </Card>
     );
   }

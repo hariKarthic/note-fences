@@ -24,7 +24,7 @@ class ActionContainer extends PureComponent {
       <div style={styles.container}>
         <Button
           variant="fab"
-          color="primary"
+          color="secondary"
           aria-label="Add"
           onClick={() => this.setState({ open: true })}
         >
