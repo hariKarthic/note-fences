@@ -17,8 +17,8 @@ class Header extends PureComponent {
     return (
       <AppBar position="static" color="primary">
         <Toolbar>
-          <Typography variant="title" color="inherit" className={classes.grow}>
-            Notes Fencer
+          <Typography style={{ fontFamily: 'Anton, sans-serif' }} variant="title" color="inherit" className={classes.grow}>
+            Notefencer
           </Typography>
           <VoteWidget />
         </Toolbar>
