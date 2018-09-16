@@ -6,11 +6,10 @@ import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
   root: {
-    flexGrow: 1,
     margin: 20
   },
   card: {
-    color: theme.palette.text.secondary
+    color: "#000"
   },
   noNotes: {
     textAlign: "center",
@@ -38,10 +37,10 @@ class AppContainer extends PureComponent {
     }
     return (
       <main className={classes.root}>
-        <Grid container spacing={16} justify="center">
+        <Grid container spacing={16}  justify="center">
           {data &&
             data.map(note => (
-              <Grid item xs key={note.id}>
+              <Grid item xs={12} sm={4} key={note.id}>
                 <NoteCard
                   cardClass={classes.card}
                   key={note.id}

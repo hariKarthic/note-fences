@@ -1,10 +1,32 @@
 import React, { PureComponent } from "react";
-import Modal from "react-responsive-modal";
 import Button from "@material-ui/core/Button";
+import ReactModal from 'react-modal'
+import SendIcon from '@material-ui/icons/SendRounded';
+import ChevronLeft from '@material-ui/icons/ChevronLeft';
 
-const styles = {
-  cancelBtn: {
-    marginRight: 10
+const reactModalStyles = {
+  overlay: {
+    background: "rgba(0, 0, 0, 0.75)",
+    display: "flex",
+    alignItems: "flex-start",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    overflowY: "auto",
+    overflowX: "hidden",
+    zIndex: 1000
+  },
+  modal: {
+    width: "100%",
+    height: "100vh",
+    position: "relative",
+    padding: "1.2rem",
+    background: "#ffffff",
+    backgroundClip: "padding-box",
+    boxShadow: " 0 12px 15px 0 rgba(0, 0, 0, 0.25)",
+    margin: "auto"
   }
 };
 
@@ -51,11 +73,23 @@ class EditNoteModal extends PureComponent {
   render() {
     const { open, note } = this.state;
     return (
-      <Modal open={open} onClose={this.closeModal} center showCloseIcon={false}>
+      <ReactModal
+        isOpen={open}
+        className='rm-content'
+        overlayClassName='rm-overlay'
+        onRequestClose={this.closeModal}
+      >
+      <Button onClick={this.closeModal} style={{width: 90, padding: 0, maxWidth: 20}}>
+      <ChevronLeft ></ChevronLeft>
+      Back
+      </Button>
+      
         <textarea
           onChange={this.handleChange}
           value={note.text}
-          style={{ minWidth: 300, minHeight: 80 }}
+          placeholder='You have 160 characters to express yourself :)'
+          maxLength="160"
+          style={{ minWidth: 300,marginTop:20, minHeight: 100 ,border:'1px solid #ccc'}}
           autoFocus
         />
         <div
@@ -65,25 +99,13 @@ class EditNoteModal extends PureComponent {
             marginTop: 20
           }}
         >
-          <Button
-            variant="contained"
-            color="primary"
-            size="small"
-            onClick={this.handleSendClick}
-          >
+          <Button variant="extendedFab" color="secondary" onClick={this.handleSendClick}>
             Send
-          </Button>
-          <Button
-            style={styles.cancelBtn}
-            variant="outlined"
-            color="primary"
-            size="small"
-            onClick={this.closeModal}
-          >
-            Cancel
+            <SendIcon style={{marginLeft: 10}}/>
+
           </Button>
         </div>
-      </Modal>
+      </ReactModal>
     );
   }
 }
