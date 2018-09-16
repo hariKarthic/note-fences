@@ -3,14 +3,15 @@
 /**
  * Module dependencies.
  */
-import FireBase from "./firebaseHelper";
-var app = require("./app");
-var debug = require("debug")("node:server");
-var http = require("http");
+import FirebaseHelper from "./firebaseHelper";
+import app from './app';
+// import debug from 'debug';
+import http from 'http';
 
 /**
  * Get port from environment and store in Express.
  */
+const firebaseHelper = new FirebaseHelper();
 
 var port = normalizePort(process.env.PORT || "3000");
 app.set("port", port);
@@ -22,15 +23,20 @@ app.set("port", port);
 var server = http.createServer(app);
 var io = require("socket.io")(server);
 
-io.on("connection", function(socket) {
-  setInterval(function() {
-    socket.emit("INTERVALS", { message: new Date() });
-  }, 1000);
-  socket.on("CLIENT_DATA", function(data) {
-    const fb = new FireBase();
-    fb.postNote(data.kubs);
-    socket.broadcast.emit("KUBS", { message: data.kubs });
+io.on("connection", socket => {
+  io.to(socket.id).emit('INIT_CONN_EV', { message: firebaseHelper.getAllLocations([]) });
+  
+  socket.on("FETCH_NOTE_EV", data => {
+    const notes = firebaseHelper.getNote(data.guids);
+    io.to(socket.id).emit("SEND_NOTE", { notes });
   });
+
+  socket.on('PUSH_NOTE', data => {
+    firebaseHelper.postNote(data.guid, data.latitude, data.longitude, data.message)
+    .then(() => {
+      socket.broadcast.emit('INIT_CONN_EV', { message: firebaseHelper.getAllLocations([]) });
+    });
+  })
 });
 
 /**
@@ -94,5 +100,5 @@ function onError(error) {
 function onListening() {
   var addr = server.address();
   var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  debug("Listening on " + bind);
+  // debug('node:server')("Listening on " + bind);
 }

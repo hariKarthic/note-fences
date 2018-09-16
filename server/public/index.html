@@ -14,7 +14,7 @@
   <button id="btn">click me</button>
   <script>
     var socket = io.connect();
-    socket.on('INTERVALS', function(data){
+    socket.on('INIT_CONN_EV', function(data){
         document.getElementById('server-msg').innerHTML = data.message;
     });
     socket.on('KUBS', function(data){

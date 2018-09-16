@@ -8,10 +8,14 @@ const settings = { timestampsInSnapshots: true };
 
 firestore.settings(settings);
 
-const dataExtractionCallback = data => {
+const dataExtractionCallback = (data, guids) => () => {
     let colln = [];
     data.forEach(datum => {
-        colln.push(datum.data());
+        if(guids.length && guids.includes(datum.data().guid)){
+            colln.push(datum.data());
+        }else{
+            colln.push(datum.data());
+        }
     })
     return colln;
 };
@@ -23,17 +27,31 @@ export default class FirebaseHelper {
     postNote(docId, lat, long, note) {
         this.notesRef
         .doc(docId)
-        .set({ note, lat, long });
+        .set({ note, lat, long, guid });
     }
-    getAllLocations(docIdColln){
+    getAllLocations(guids){
         return this.notesRef
         .get()
-        .then(dataExtractionCallback);
+        .then(data => {
+            let colln = [];
+            data.forEach(datum => {
+                colln.push(datum.data());
+            })
+            return colln;
+        });
     }
-    getNote(docId){
+    getNote(guids){
         return this.notesRef
         .doc(docId)
         .get()
-        .then(dataExtractionCallback);
+        .then(data => {
+            let colln = [];
+            data.forEach(datum => {
+                if(guids.includes(datum.data().guid)){
+                    colln.push(datum.data());
+                }
+            })
+            return colln;
+        });
     }
 };
