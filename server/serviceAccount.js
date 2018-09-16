@@ -1,4 +1,4 @@
-{
+const serviceAccountDetails = {
     "type": "service_account",
     "project_id": "note-fence",
     "private_key_id": "43a9838344987f3873b8d8c57bef9bf2feb69b7d",
@@ -9,4 +9,6 @@
     "token_uri": "https://oauth2.googleapis.com/token",
     "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
     "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-z4zuw%40note-fence.iam.gserviceaccount.com"
-}  
+};
+
+export default serviceAccountDetails;

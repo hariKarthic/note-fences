@@ -55,12 +55,12 @@ class EditNoteModal extends PureComponent {
     if (!this.state.note) return;
     if (this.props.isEdit) {
       this.props.onUpdateNote({
-        text: this.state.note,
+        note: this.state.note,
         id: this.props.data.id
       });
     } else {
       this.props.onAddNote({
-        text: this.state.note
+        note: this.state.note
       });
     }
     this.setState({ open: false });
@@ -83,10 +83,10 @@ class EditNoteModal extends PureComponent {
       <ChevronLeft ></ChevronLeft>
       Back
       </Button>
-      
+
         <textarea
           onChange={this.handleChange}
-          value={note.text}
+          value={note.note}
           placeholder='You have 160 characters to express yourself :)'
           maxLength="160"
           style={{ minWidth: 300,marginTop:20, minHeight: 100 ,border:'1px solid #ccc'}}

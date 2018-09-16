@@ -24,13 +24,21 @@ var server = http.createServer(app);
 var io = require("socket.io")(server);
 
 io.on("connection", socket => {
-  io.to(socket.id).emit("INIT_CONN_EV", {
-    message: firebaseHelper.getAllLocations([])
+  console.log('first conn: ', socket.id);
+  let notes = [];
+  firebaseHelper.getAllLocations([]).then(notes => {
+    console.log(notes);
+    io.to(socket.id).emit("INIT_CONN_EV", {
+      notes: notes
+    });
   });
-
+  
   socket.on("FETCH_NOTE_EV", data => {
-    const notes = firebaseHelper.getNote(data.guids);
-    io.to(socket.id).emit("SEND_NOTE", { notes });
+    firebaseHelper.getNote(data.guids)
+    .then(notes => {
+      io.to(socket.id).emit("SEND_NOTE", { notes });
+    });
+    
   });
 
   socket.on("PUSH_NOTE", data => {
