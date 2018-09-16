@@ -19,6 +19,7 @@ class App extends Component {
   state = {};
   locationWatchId = {};
   otherFences = null;
+  newPositionDetected = false;
   locationOpts = {
     enableHighAccuracy: true,
     timeout: 3000,
@@ -68,7 +69,8 @@ class App extends Component {
       const localNoteGuids = localStorage.getArray('my_notes') || [];
       const noteCoordsFromSocket = datafromsocket.filter(item => {
         return !localNoteGuids.includes(item.guid);
-      }).map(item => {
+      })
+      .map(item => {
         return {
             center:{ 
             latitude: item.latitude,
@@ -160,9 +162,20 @@ class App extends Component {
       this.watcherror,
       this.locationOpts
     );
+    this.locationTime = setInterval(() => {
+      if(!this.newPositionDetected){
+        this.newPositionDetected = true;
+        navigator.geolocation.getCurrentPosition(
+          this.watchsuccess,
+          this.watcherror,
+          this.locationOpts
+        );
+      }
+    }, 2000);
   }
 
   watchsuccess(pos) {
+    this.newPositionDetected = false;
     console.log("Watched location", pos.coords);
     const coords = pos.coords;
     localStorage.setItem("cachedLocation", JSON.stringify({
@@ -190,6 +203,7 @@ class App extends Component {
   }
 
   watcherror(err) {
+    this.newPositionDetected = false;
     console.log("Error while tracking user location");
     console.error(err);
   }
