@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
-import { NoteCard, EditNoteModal } from "./components";
+import { NoteCard } from "./components";
 import Grid from "@material-ui/core/Grid";
-import Chip from "@material-ui/core/Chip";
 import { withStyles } from "@material-ui/core/styles";
 
 const styles = theme => ({
@@ -22,20 +21,11 @@ class AppContainer extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      open: false,
       note: ""
     };
   }
   render() {
     const { classes, data } = this.props;
-    const { open, note } = this.state;
-    if (!data.length) {
-      return (
-        <div className={classes.noNotes}>
-          <Chip label="No notes available!" />
-        </div>
-      );
-    }
     return (
       <main className={classes.root}>
         <Grid container spacing={16} justify="center">
