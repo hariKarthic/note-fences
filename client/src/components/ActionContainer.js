@@ -6,8 +6,9 @@ import EditNoteModal from "./EditNoteModal";
 const styles = {
   container: {
     position: "fixed",
-    bottom: 20,
-    right: 20
+    bottom: 80,
+    right: 20,
+    zIndex: 1
   }
 };
 class ActionContainer extends PureComponent {
