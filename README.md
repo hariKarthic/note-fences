@@ -1,14 +1,16 @@
 # NoteFence App
 An app to send location aware notes which will be received when device is in that particular geo-fenced location.
 
-## Tech Stack
+## Tech Stack and Major Packages used
 - react (duh!)
-- firebase,fire-store (for data crunching)
-- Sentry (logger)
-- lodash (le old union of array)
+- firebase (https://firebase.google.com/)
+- Sentry (https://sentry.io/)
 - webpack (🤷🏽‍)
+- fencry (https://www.npmjs.com/package/fencery)
+- material-ui (https://material-ui.com/)
+- uuid (https://www.npmjs.com/package/uuid)
 
-_Made with ❤️ using create-react-app_
+Made with ❤️ using create-react-app
 
 ## Use cases
 1. As a customer is a store, i can drop quick reviews next to product aisles which will be picked up by incoming customers.
@@ -61,6 +63,10 @@ Once deployed, we can launch the app through the URL provided by heroku.
 - Anand Kumar
 - Yoga
 
-## Credits
+## Credits for assets
 - Smashicons (for app icon)
     > https://www.flaticon.com/authors/smashiconss
+- BG images
+    > https://www.transparenttextures.com/
+- Sound Effects
+    > http://www.orangefreesounds.com/
