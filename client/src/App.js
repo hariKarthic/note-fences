@@ -152,7 +152,7 @@ class App extends Component {
         longitude: coords.longitude
       });
     //TODO: loop through the set of lat/long and trigger
-    if (enteredFences.length) {
+    if (enteredFences && enteredFences.length) {
       console.log("Entered into the some other fence and picked up a note");
       //TODO : Make socket call
       socket.emit("FETCH_NOTE_EV", {
