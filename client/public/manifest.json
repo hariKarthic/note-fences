@@ -1,15 +1,20 @@
 {
   "short_name": "NoteFence",
-  "name": "Send and receive geo fenced note",
+  "name": "NoteFences -Send and receive geo fenced notes amidst friends",
   "icons": [
     {
       "src": "favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
+      "sizes": "48x48",
       "type": "image/x-icon"
+    },{
+      "src":"favicon-152.png",
+      "size":"512x512",
+      "type":"image/png"
     }
   ],
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
+  "orientation":"potrait",
   "background_color": "#ffffff"
 }
