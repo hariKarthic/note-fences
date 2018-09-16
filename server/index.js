@@ -37,9 +37,8 @@ io.on("connection", function(socket) {
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, onListening);
 server.on("error", onError);
-server.on("listening", onListening);
 
 /**
  * Normalize a port into a number, string, or false.
