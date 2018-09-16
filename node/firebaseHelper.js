@@ -1,28 +1,39 @@
-const Firestore = require('@google-cloud/firestore');
-// import '@firebase/firestore';
-// import serviceAccount from './serviceaccount';
+import Firestore from '@google-cloud/firestore';
 
-const fb = new Firestore({
+const firestore = new Firestore({
     projectId: "note-fence",
     keyFilename: './serviceaccount.json'
 });
+const settings = { timestampsInSnapshots: true };
+
+firestore.settings(settings);
+
+const dataExtractionCallback = data => {
+    let colln = [];
+    data.forEach(datum => {
+        colln.push(datum.data());
+    })
+    return colln;
+};
 
 export default class FirebaseHelper {
     constructor(){
-        // this.database = fb.database();
-        // this.storage = fb.storage();
-
-        this.notesRef = fb.collection('notes').doc();
-        // this.usersRef = this.database.ref('note-fence').child('users');
+        this.notesRef = firestore.collection('notes');
     }
-    postNote(note) {
-        console.log(note);
-        this.notesRef.set({
-            note: note,
-            date: new Date()
-        });
+    postNote(docId, lat, long, note) {
+        this.notesRef
+        .doc(docId)
+        .set({ note, lat, long });
     }
-    getNotes(){
-
+    getAllLocations(docIdColln){
+        return this.notesRef
+        .get()
+        .then(dataExtractionCallback);
+    }
+    getNote(docId){
+        return this.notesRef
+        .doc(docId)
+        .get()
+        .then(dataExtractionCallback);
     }
 };

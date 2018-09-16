@@ -4,34 +4,38 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('node:server');
-var http = require('http');
+import app from '../app';
+import debug from 'debug';
+import http from 'http';
+import FireBaseHelper from './firebaseHelper';
 
-import FireBase from './firebaseHelper';
+const fireBaseHelper = new FireBaseHelper();
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
-var io = require('socket.io')(server);
+const server = http.createServer(app);
+const io = require('socket.io')(server);
 
 io.on('connection', function(socket){
-  setInterval(function(){
-    socket.emit('INTERVALS', {'message': new Date()});
-  }, 1000);
-  socket.on('CLIENT_DATA', function(data){
-    const fb = new FireBase();
-    fb.postNote(data.kubs);
-    socket.broadcast.emit('KUBS', {'message': data.kubs});
+  // setInterval(function(){
+  //   socket.emit('INTERVALS', {'message': new Date()});
+  // }, 1000);
+  socket.on('CLIENT_DATA', function(clk){
+    fireBaseHelper.getNotes().then(data => {
+      console.log(data);
+      socket.emit('INTERVALS', { 'message': data })
+    });
+    // socket.emit('INTERVALS', { 'message': d })
+    // socket.broadcast.emit('KUBS', {'message': data.kubs});
   });
 });
 
@@ -100,5 +104,5 @@ function onListening() {
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
-  debug('Listening on ' + bind);
+  debug('node:server')('Listening on ' + bind);
 }
