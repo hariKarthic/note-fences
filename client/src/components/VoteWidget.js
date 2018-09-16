@@ -1,26 +1,24 @@
 import React, { PureComponent } from "react";
+import fetchJsonp from "fetch-jsonp";
 import Chip from "@material-ui/core/Chip";
 import Favorite from "@material-ui/icons/Favorite";
-import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 import IconButton from "@material-ui/core/IconButton";
 const voteAPI =
-  "https://www.reactriot.com/entries/114-ladiz-was-haroom/vote/stats";
+  "https://www.reactriot.com/entries/114-ladiz-was-haroom/vote/stats.jsonp";
 
 class VoteWidget extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      vote_count: 0,
-      voted: false
+      vote_count: 0
     };
   }
   componentDidMount() {
-    fetch(voteAPI)
+    fetchJsonp(voteAPI)
       .then(response => {
         return response.json();
       })
       .then(voteJson => {
-        console.log("json: ", voteJson);
         this.setState({ ...voteJson });
       })
       .catch(error => {
@@ -32,7 +30,7 @@ class VoteWidget extends PureComponent {
       "https://www.reactriot.com/entries/114-ladiz-was-haroom/vote";
   };
   render() {
-    const { vote_count, voted } = this.state;
+    const { vote_count } = this.state;
     return (
       <Chip
         onClick={this.handleVote}

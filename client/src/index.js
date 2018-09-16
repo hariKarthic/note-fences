@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
-
+require("es6-promise").polyfill(); // ie polyfill
 const initApp = () => {
   ReactDOM.render(<App />, document.getElementById("root"));
   registerServiceWorker();
