@@ -1,5 +1,7 @@
 import { CssBaseline } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
+import _union from 'lodash.union';
+import _uniq from 'lodash.uniqwith';
 import React, { Component, Fragment } from "react";
 import io from "socket.io-client";
 import { ActionContainer, Header } from "./components";
@@ -53,8 +55,9 @@ class App extends Component {
   }
 
   showReceivedNotesOnScreen(notes){
+    console.log(this.state.notes, notes);
     this.setState({
-      notes: notes
+      notes: _uniq(_union(this.state.notes, notes), 'note')
     });
   }
 
