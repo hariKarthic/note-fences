@@ -3,7 +3,7 @@ import serviceAccountDetails from './serviceAccount';
 
 const firestore = new Firestore({
     projectId: "note-fence",
-    keyFilename: serviceAccount
+    keyFilename: serviceAccountDetails
 });
 const settings = { timestampsInSnapshots: true };
 
