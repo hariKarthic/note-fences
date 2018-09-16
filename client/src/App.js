@@ -37,16 +37,23 @@ class App extends Component {
     this.getLocation = this.getLocation.bind(this);
     this.setGeoFence = this.setCurrentNoteFence.bind(this);
     this.setOtherFences = this.setOtherFences.bind(this);
+    this.showReceivedNotesOnScreen = this.showReceivedNotesOnScreen.bind(this);
 
     socket.on("INIT_CONN_EV", data => {
       console.log("Network fences");
-      this.setOtherFences(data.message);
+      this.setOtherFences(data.notes);
     });
 
     socket.on("SEND_NOTE", data => {
       console.log("Notes received");
       this.setLocalGuids(data.notes.map(item => item.guid));
       this.showReceivedNotesOnScreen(data.notes);
+    });
+  }
+
+  showReceivedNotesOnScreen(notes){
+    this.setState({
+      notes: notes
     });
   }
 
@@ -58,13 +65,18 @@ class App extends Component {
 
   setOtherFences(datafromsocket) {
     if (datafromsocket.length) {
-      const localNoteGuids = localStorage.getArray();
+      const localNoteGuids = localStorage.getArray('my_notes') || [];
       const noteCoordsFromSocket = datafromsocket.filter(item => {
         return !localNoteGuids.includes(item.guid);
-      });
-
-      noteCoordsFromSocket.forEach(element => {
-        element.radius = 5;
+      }).map(item => {
+        return {
+            center:{ 
+            latitude: item.latitude,
+            longitude: item.longitude  
+          },
+          name: item.guid,
+          radius: 5
+        };
       });
 
       this.otherFences = new FENCE(noteCoordsFromSocket);
@@ -74,7 +86,10 @@ class App extends Component {
   getLocation(data) {
     const random_guid = uuidv1();
     const onLocationSuccess = position => {
-      localStorage.setItem("cachedLocation", JSON.stringify(position.coords)); //updating localstorage with new position
+      localStorage.setItem("cachedLocation", JSON.stringify({
+        'latitude': position.coords.latitude,
+        'longitude': position.coords.longitude
+      })); //updating localstorage with new position
       this.setCurrentNoteFence(position.coords, random_guid);
       this.broadCastPayLoad(position.coords, random_guid, data);
     };
@@ -99,7 +114,7 @@ class App extends Component {
     //TODO : Emit a socket event with payload
     socket.emit("PUSH_NOTE", {
       guid: fenceId,
-      message: message.text,
+      message: message.note,
       latitude: coords.latitude,
       longitude: coords.longitude
     });
@@ -150,7 +165,10 @@ class App extends Component {
   watchsuccess(pos) {
     console.log("Watched location", pos.coords);
     const coords = pos.coords;
-    localStorage.setItem("cachedLocation", JSON.stringify(coords.coords));
+    localStorage.setItem("cachedLocation", JSON.stringify({
+      'latitude': coords.latitude, 
+      'longitude': coords.longitude
+    }));
     const enteredFences =
       this.otherFences &&
       this.otherFences.isInside({
@@ -160,7 +178,7 @@ class App extends Component {
     if (enteredFences && enteredFences.length) {
       console.log("Entered into the some other fence and picked up a note");
       socket.emit("FETCH_NOTE_EV", {
-        guids: [enteredFences.map(item => item.guid)]
+        guids: enteredFences.map(item => item.name)
       });
       this.setState({ hasEntered: true });
       //navigator.geolocation.clearWatch(this.locationWatchId);

@@ -40,7 +40,7 @@ class AppContainer extends PureComponent {
       <main className={classes.root}>
         <Grid container spacing={16} justify="center">
           {data &&
-            data.map(note => (
+            data.filter(item => item.note.length).map(note => (
               <Grid item xs key={note.id}>
                 <NoteCard
                   cardClass={classes.card}
@@ -52,13 +52,13 @@ class AppContainer extends PureComponent {
             ))}
         </Grid>
 
-        <EditNoteModal
+        {/*<EditNoteModal
           isOpen={open}
           data={note}
           isEdit={true}
           onUpdateNote={this.props.onUpdateNote}
           onClose={() => this.setState({ open: false })}
-        />
+        />*/}
       </main>
     );
   }

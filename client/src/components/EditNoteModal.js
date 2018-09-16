@@ -32,12 +32,12 @@ class EditNoteModal extends PureComponent {
     console.log(this.props.data);
     if (this.props.isEdit) {
       this.props.onUpdateNote({
-        text: this.state.note,
+        note: this.state.note,
         id: this.props.data.id
       });
     } else {
       this.props.onAddNote({
-        text: this.state.note
+        note: this.state.note
       });
     }
     this.setState({ open: false });
@@ -53,7 +53,7 @@ class EditNoteModal extends PureComponent {
       <Modal open={open} onClose={this.closeModal} center showCloseIcon={false}>
         <textarea
           onChange={this.handleChange}
-          value={note.text}
+          value={note.note}
           style={{ minWidth: 300, minHeight: 80 }}
           autoFocus
         />

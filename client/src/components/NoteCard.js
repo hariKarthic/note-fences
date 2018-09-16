@@ -14,24 +14,24 @@ class NoteCard extends PureComponent {
       <Card className={this.props.cardClass}>
         <CardContent>
           <Typography color="textSecondary">
-            {this.props.data && this.props.data.text}
+            {this.props.data && this.props.data.note}
           </Typography>
         </CardContent>
-        <CardActions>
+        {/*<CardActions>
           <IconButton
             onClick={this.props.onClick}
             style={{ marginLeft: "auto" }}
           >
             <EditIcon />
           </IconButton>
-        </CardActions>
+        </CardActions>*/}
       </Card>
     );
   }
 }
 
 Card.propTypes = {
-  text: PropTypes.string
+  note: PropTypes.string
 };
 
 export default NoteCard;

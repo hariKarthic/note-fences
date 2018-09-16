@@ -1,9 +1,12 @@
 import Firestore from '@google-cloud/firestore';
-// import serviceAccountDetails from './serviceAccount'; 
+import serviceAccountDetails from './serviceAccount'; 
 
 const firestore = new Firestore({
     projectId: "note-fence",
-    keyFilename: './dist/serviceAccount.json'
+    credentials: {
+        private_key: serviceAccountDetails.private_key,
+        client_email: serviceAccountDetails.client_email
+    }
 });
 const settings = { timestampsInSnapshots: true };
 
@@ -25,11 +28,11 @@ export default class FirebaseHelper {
     constructor(){
         this.notesRef = firestore.collection('notes');
     }
-    postNote(guid, lat, long, note) {
-        console.log(guid, lat, long, note);
+    postNote(guid, latitude, longitude, note) {
+        console.log(guid, latitude, longitude, note);
         return this.notesRef
         .doc()
-        .set({ note, lat, long, guid });
+        .set({ note, latitude, longitude, guid });
     }
     getAllLocations(guids){
         return this.notesRef
@@ -39,6 +42,7 @@ export default class FirebaseHelper {
             data.forEach(datum => {
                 colln.push(datum.data());
             })
+            // console.log('all conns received: ', colln);
             return colln;
         });
     }
@@ -48,10 +52,13 @@ export default class FirebaseHelper {
         .then(data => {
             let colln = [];
             data.forEach(datum => {
+                console.log('guids: ', guids);
+                
                 if(guids.includes(datum.data().guid)){
                     colln.push(datum.data());
                 }
             })
+            console.log('fetched msgs: ', colln);
             return colln;
         });
     }
