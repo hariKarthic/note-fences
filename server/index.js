@@ -5,7 +5,7 @@
  */
 import FirebaseHelper from "./firebaseHelper";
 import app from './app';
-// import debug from 'debug';
+import debug from 'debug';
 import http from 'http';
 
 /**
@@ -98,6 +98,6 @@ function onError(error) {
 
 function onListening() {
   var addr = server.address();
-  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port;
-  debug('node:server')("Listening on " + bind);
+  var bind = typeof addr === "string" ? "pipe " + addr : "port " + addr.port; 
+ debug('node:server')("Listening on " + bind);
 }
