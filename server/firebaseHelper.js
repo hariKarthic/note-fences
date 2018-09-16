@@ -25,9 +25,10 @@ export default class FirebaseHelper {
     constructor(){
         this.notesRef = firestore.collection('notes');
     }
-    postNote(docId, lat, long, note) {
-        this.notesRef
-        .doc(docId)
+    postNote(guid, lat, long, note) {
+        console.log(guid, lat, long, note);
+        return this.notesRef
+        .doc()
         .set({ note, lat, long, guid });
     }
     getAllLocations(guids){
@@ -43,7 +44,6 @@ export default class FirebaseHelper {
     }
     getNote(guids){
         return this.notesRef
-        .doc(docId)
         .get()
         .then(data => {
             let colln = [];

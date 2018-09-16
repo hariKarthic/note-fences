@@ -34,6 +34,7 @@ io.on("connection", socket => {
   });
 
   socket.on("PUSH_NOTE", data => {
+    console.log('------------PUSH_NOTE: ', data.guid, data.latitude, data.longitude, data.message);
     firebaseHelper
       .postNote(data.guid, data.latitude, data.longitude, data.message)
       .then(() => {

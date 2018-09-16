@@ -71,7 +71,7 @@ class App extends Component {
 
   getLocation(data) {
     const success = position => {
-      var random_guid = uuidv1();
+      const random_guid = uuidv1();
       this.setLocalGuids([random_guid]);
       console.log(position);
       this.setCurrentNoteFence(position.coords, random_guid);
@@ -91,12 +91,11 @@ class App extends Component {
 
   broadCastPayLoad(coords, fenceId, message) {
     //TODO : Emit a socket event with payload
-    socket.emit("PUSH_NODE", {
-      note: {
+    socket.emit("PUSH_NOTE", {
         guid: fenceId,
-        message,
-        ...coords,
-      }
+        message: message.text,
+        latitude: coords.latitude,
+        longitude: coords.longitude
     });
     console.info("Note pushed to server");
   }
