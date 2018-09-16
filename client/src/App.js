@@ -1,5 +1,4 @@
 import { CssBaseline } from "@material-ui/core";
-import Typography from "@material-ui/core/Typography";
 import _union from 'lodash.union';
 import _uniq from 'lodash.uniqwith';
 import React, { Component, Fragment } from "react";
@@ -10,6 +9,7 @@ import MainContent from "./MainContent";
 //let webworker = worker();
 import { FENCE } from "./utils/Fencery";
 import "./utils/storageUtils";
+import Loader from "./components/loader";
 
 const socket = io();
 socket.on("connect", () => {
@@ -218,9 +218,7 @@ class App extends Component {
         <CssBaseline />
         <Header />
         <MainContent data={notes} onUpdateNote={this.updateNote} />
-        <Typography variant="caption" align="center">
-          {this.state.hasEntered ? "Hurrah ! Found a note" : "No Notes Yet..."}
-        </Typography>
+          {!this.state.hasEntered && <Loader/>}
         <ActionContainer data={notes} onAddNote={this.addNewNote} />
       </Fragment>
     );
