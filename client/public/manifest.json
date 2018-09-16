@@ -1,20 +1,21 @@
 {
   "short_name": "NoteFence",
-  "name": "NoteFences -Send and receive geo fenced notes amidst friends",
+  "name": "NoteFences-drop or pickup digital notes",
   "icons": [
     {
-      "src": "favicon.ico",
-      "sizes": "48x48",
-      "type": "image/x-icon"
-    },{
-      "src":"favicon-152.png",
-      "size":"512x512",
-      "type":"image/png"
+      "src": "images/favicon-512x512.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "images/favicon-512x512.png",
+      "size": "512x512",
+      "type": "image/png"
     }
   ],
   "start_url": "./index.html",
   "display": "standalone",
   "theme_color": "#000000",
-  "orientation":"potrait",
+  "orientation": "potrait",
   "background_color": "#ffffff"
 }
