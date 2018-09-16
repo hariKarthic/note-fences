@@ -30,7 +30,7 @@ class AppContainer extends PureComponent {
       <main className={classes.root}>
         <Grid container spacing={16}  justify="center">
           {data &&
-            data.filter(item => item.note.length).map(note => (
+            data.filter(item => item.note && item.note.length).map(note => (
               <Grid item xs={12} sm={4}  key={note.id}>
                 <NoteCard
                   cardClass={classes.card}

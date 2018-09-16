@@ -1,6 +1,4 @@
 import { CssBaseline } from "@material-ui/core";
-import _union from 'lodash.union';
-import _uniq from 'lodash.uniqwith';
 import {  MuiThemeProvider } from '@material-ui/core/styles';
 import Typography from "@material-ui/core/Typography";
 import React, { Component, Fragment } from "react";
@@ -60,9 +58,16 @@ class App extends Component {
   }
 
   showReceivedNotesOnScreen(notes){
-    console.log(this.state.notes, notes);
+    let existingArr = this.state.notes.map(item => item.note);
+    
+    let newArr = existingArr
+    .concat(notes.map(item => item.note))
+    .filter((value, index, self) => { 
+      return self.indexOf(value) === index;
+    });
+
     this.setState({
-      notes: _uniq(_union(this.state.notes, notes), 'note')
+      notes: newArr
     });
   }
 

@@ -62,6 +62,7 @@ class EditNoteModal extends PureComponent {
       this.props.onAddNote({
         note: this.state.note
       });
+      document.getElementById("audio").play();
     }
     this.setState({ open: false });
     this.props.onClose();
@@ -79,11 +80,11 @@ class EditNoteModal extends PureComponent {
         overlayClassName='rm-overlay'
         onRequestClose={this.closeModal}
       >
+      <audio id="audio" src="../effect.mp3" autostart="false" ></audio>
       <Button onClick={this.closeModal} style={{width: 90, padding: 0, maxWidth: 20}}>
       <ChevronLeft ></ChevronLeft>
       Back
       </Button>
-
         <textarea
           onChange={this.handleChange}
           value={note.note}
